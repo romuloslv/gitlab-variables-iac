@@ -2,7 +2,7 @@
 
 set -e
 
-vault login token=plaintext
+vault login token=changeme
 vault secrets enable -version=2 kv
 vault kv put kv/secrets/gitlab token=changeme
 
