@@ -1,6 +1,6 @@
 projects_ids = [
-  35239452,
-  39143514
+  changeme,
+  changeme
 ]
 
 projects_vars = [
