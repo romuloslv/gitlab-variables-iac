@@ -1,0 +1,53 @@
+version: "3.9"
+
+services:
+  vault_server:
+    image: hashicorp/vault:1.13.0
+    container_name: vault_server
+    hostname: vault_server
+    restart: on-failure:3
+    command: "server -dev"
+    environment:
+      VAULT_ADDR: "http://0.0.0.0:8200"
+      VAULT_API_ADDR: "http://127.0.0.1:8200"
+      VAULT_DEV_ROOT_TOKEN_ID: "plaintext"
+      VAULT_LOG_LEVEL: "info"
+      SKIP_CHOWN: "true"
+      VAULT_UI: "true"
+    volumes:
+      - .config/:/config:rw
+      - .policies/:/policies:rw
+      - .file/:/file:rw
+      - .data/:/data:rw
+      - .logs/:/logs:rw
+    cap_add:
+      - IPC_LOCK
+    healthcheck:
+      test: ["CMD", "nc", "-zvw1", "vault_server:8200"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "8200:8200"
+    networks:
+      - lab
+
+  vault_agent:
+    image: hashicorp/vault:1.13.0
+    container_name: vault_agent
+    hostname: vault_agent
+    restart: on-failure:3
+    command: "agent -config=/policies/default.json"
+    environment:
+      VAULT_LOG_LEVEL: "info"
+      VAULT_ADDR: "http://vault_server:8200"
+    volumes:
+      - ./policies/:/policies:rw
+    cap_add:
+      - IPC_LOCK
+    networks:
+      - lab
+
+networks:
+  lab:
+    driver: bridge
