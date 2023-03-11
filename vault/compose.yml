@@ -15,11 +15,11 @@ services:
       SKIP_CHOWN: "true"
       VAULT_UI: "true"
     volumes:
-      - .config/:/config:rw
-      - .policies/:/policies:rw
-      - .file/:/file:rw
-      - .data/:/data:rw
-      - .logs/:/logs:rw
+      - ./config:/config:rw
+      - ./policies:/policies:rw
+      - ./file:/file:rw
+      - ./data:/data:rw
+      - ./logs:/logs:rw
     cap_add:
       - IPC_LOCK
     healthcheck:
@@ -37,12 +37,16 @@ services:
     container_name: vault_agent
     hostname: vault_agent
     restart: on-failure:3
-    command: "agent -config=/policies/default.json"
+    command: sh -c '/config/init.sh'
     environment:
       VAULT_LOG_LEVEL: "info"
       VAULT_ADDR: "http://vault_server:8200"
     volumes:
-      - ./policies/:/policies:rw
+      - ./config:/config:rw
+      - ./policies:/policies:rw
+      - ./file:/file:rw
+      - ./data:/data:rw
+      - ./logs:/logs:rw
     cap_add:
       - IPC_LOCK
     networks:
