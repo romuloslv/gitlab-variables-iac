@@ -15,3 +15,4 @@ projects_vars = [
 
 # schedules_variables
 
+# groups_variables
