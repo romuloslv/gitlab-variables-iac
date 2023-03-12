@@ -1,8 +1,8 @@
 # projects_variables
 
 projects_ids = [
-  39143514,
-  35239452
+  changeme,
+  changeme
 ]
 
 projects_vars = [
