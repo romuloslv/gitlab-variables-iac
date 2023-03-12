@@ -1,10 +1,12 @@
 # gitlab-variables-iac
 
 Terraform module for creating variables in different projects.  
-For sensitive values, we use the vault to query the data and save it locally, so we can enable sensitive/plaintext variables.
+For sensitive values, the vault was used to query the data and save it locally so we can enable confidential/plain text variables.
 
 ```
-terraform apply -auto-approve -var="extension=pem"
+terraform init
+terraform fmt
+terraform validate
+terraform plan
+terraform apply -auto-approve"
 ```
-
-p.s: on failure, retry the command
