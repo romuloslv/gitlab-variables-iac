@@ -1,13 +1,13 @@
 locals { sensitive_files = [ local_sensitive_file.user_pem, local_sensitive_file.user2_pem ] }
 
 resource "local_sensitive_file" "user_pem" {
-  content  = data.vault_generic_secret.user_pem.data.key
+  content  = var.user_pem
   filename = "../secrets/user.pem"
   file_permission = "0600"
 }
 
 resource "local_sensitive_file" "user2_pem" {
-  content  = data.vault_generic_secret.user2_pem.data.key
+  content  = var.user2_pem
   filename = "../secrets/user2.pem"
   file_permission = "0600"
 }

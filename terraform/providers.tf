@@ -5,5 +5,5 @@ provider "gitlab" {
 
 provider "vault" {
   address = "http://localhost:8200"
-  token = "changeme"
+  token   = "changeme"
 }
